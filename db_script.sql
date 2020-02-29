@@ -1,7 +1,11 @@
 BEGIN;
 
 DROP TABLE IF EXISTS product CASCADE;
-CREATE TABLE product (id bigserial PRIMARY KEY, title VARCHAR(255), price numeric(8, 2));
+CREATE TABLE product (
+    id bigserial PRIMARY KEY,
+    title VARCHAR(255),
+    price numeric(8, 2)
+);
 INSERT INTO product (title, price) VALUES
 ('women''s dress', 35500.00),
 ('women''s boots', 20500.00),
@@ -23,5 +27,38 @@ INSERT INTO product (title, price) VALUES
 ('bedroom Slippers', 3100.00),
 ('electric chandelier', 7500.00),
 ('dashboard camera', 12160.00);
+
+DROP TABLE IF EXISTS students CASCADE;
+CREATE TABLE students (
+	id bigserial PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+DROP TABLE IF EXISTS courses CASCADE;
+CREATE TABLE courses (
+	id bigserial PRIMARY KEY,
+    title VARCHAR(100)
+);
+
+DROP TABLE IF EXISTS students_courses CASCADE;
+CREATE TABLE students_courses (
+	student_id bigint NOT NULL ,
+    course_id  bigint NOT NULL,
+    PRIMARY KEY (student_id, course_id),
+    CONSTRAINT FK_STUDENT FOREIGN KEY (student_id)
+    REFERENCES students (id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_COURSE FOREIGN KEY (course_id)
+    REFERENCES courses (id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+DROP TABLE IF EXISTS books CASCADE;
+CREATE TABLE books (
+    id bigserial PRIMARY KEY,
+    title VARCHAR(100),
+    description VARCHAR(255),
+    year_of_issue CHARACTER(4)
+);
 
 COMMIT;
